@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily System</title>
+  <link rel="stylesheet" href="daily system.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <!-- Banner 占位 -->
+  <div id="topBanner" class="top-banner">
+    <img id="bannerImg" src="" alt="Your Banner" style="width:100%; height:100%; object-fit:cover; display:none;">
+    <p id="bannerText">🔥 Welcome to Daily System! 🔥</p>
+  </div>
+  <!-- ====== Top Navbar ====== -->
+  <nav id="topNav">
+    <div class="nav-left">  Daily System  </div>
+    <div class="nav-links">
+      <a href="#profile" class="nav-btn">Profile</a>
+      <a href="#timetable" class="nav-btn">Timetable</a>
+      <a href="#planner" class="nav-btn">Planner</a>
+      <a href="#calendar" class="nav-btn">Calendar</a>
+      <a href="#notes" class="nav-btn">Notes</a>
+      <a href="#links" class="nav-btn">Links</a>
+      <a href="#shop" class="nav-btn">Shop</a>
+      <button id="themeToggle">
+        <img id="themeIcon" src="moon.png" alt="Theme Toggle">
+      </button>
+      <button id="widthToggle">
+        <img id="widthIcon" src="zoom out.png" alt="Width Toggle" width="24">
+      </button>
+    </div>
+  </nav>
+
+  <!-- ====== Main Layout ====== -->
+  <main class="container">
+    <!-- Left Content -->
+    <section class="content">
+
+
+      <!-- Timetable -->
+      <div id="timetable" class="section-box">
+        <h2>📅 Timetable</h2>
+        <p>Weekly class schedule (Sunday–Saturday)</p>
+        
+        <table id="timetableTable">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Subject</th>
+              <th>Time</th>
+              <th>Place</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows will load here -->
+          </tbody>
+        </table>
+
+        <div class="timetable-buttons">
+          <button onclick="addRow()">➕ Add Row</button>
+          <button onclick="deleteRow()">➖ Delete Last Row</button>
+        </div>
+      </div>
+
+
+      <!-- Daily Planner -->
+      <div id="planner" class="section-box">
+        <h2>🗓️ Daily Planner (24h)</h2>
+
+        <!-- Legend 分类说明 -->
+        <div class="planner-legend">
+          <span><span class="legend-dot legend-work"></span> Work</span>
+          <span><span class="legend-dot legend-study"></span> Study</span>
+          <span><span class="legend-dot legend-rest"></span> Rest</span>
+          <span><span class="legend-dot legend-other"></span> Other</span>
+        </div>
+
+        <!-- Planner rows will be injected here -->
+        <div id="plannerContainer"></div>
+      </div>
+
+
+
+      <!-- Calendar -->
+      <div id="calendar" class="section-box">
+        <h2>📆 Calendar</h2>
+        <p>Click a date to add/edit notes</p>
+
+        <!-- 年月切换控件 -->
+        <div class="calendar-controls">
+          <button id="prevMonth">◀</button>
+          <span id="calendarMonthYear"></span>
+          <button id="nextMonth">▶</button>
+          <input type="month" id="monthPicker">
+        </div>
+
+        <!-- 日历表格 -->
+        <div id="calendarContainer"></div>
+
+        <!-- Notes 列表 -->
+        <div id="notes-list">
+          <h3>📝 Notes</h3>
+          <ul id="notes-output"></ul>
+        </div>
+      </div>
+
+
+
+      <!-- Notes -->
+      <div id="notes" class="section-box">
+        <h2>📝 Notes</h2>
+        <p>Write down your ideas or reminders</p>
+
+        <textarea id="noteInput" rows="3" placeholder="Type your note here..."></textarea>
+        <div style="margin-top: 6px;">
+          <button onclick="addNote()">➕ Add Note</button>
+        </div>
+
+        <ul id="notesList" class="notes-list"></ul>
+      </div>
+
+
+
+      <!-- Links Dashboard -->
+      <div id="links" class="section-box">
+        <h2>🔗 Links Dashboard</h2>
+        <p>Store your important websites (school portal, e-learning, etc.)</p>
+
+        <div class="links-form">
+          <input type="text" id="linkName" placeholder="Name">
+          <input type="text" id="linkURL" placeholder="https://example.com">
+          <button onclick="addLink()">➕ Add Link</button>
+        </div>
+
+        <div id="linksGrid" class="links-grid"></div>
+      </div>
+
+
+      <!-- Shop -->
+      <div id="shop" class="section-box">
+        <h2>🛒 Shop</h2>
+        <p>Buy avatars, EXP boosts, and coin boosts!</p>
+
+        <div id="shopItems" class="shop-grid"></div>
+      </div>
+
+    </section>
+
+    <!-- Right Profile Panel -->
+      <aside id="profile" class="profile-panel">
+        <!-- 固定头像大小 -->
+        <img id="profileAvatar" src="avatars/Avatar.gif" alt="Avatar" class="profile-avatar">
+
+        <div class="profile-info">
+          <p>Hi Player</p>
+          <p id="level">Level: 1</p>
+
+          <!-- 新增头像选择 -->
+          <label for="avatarSelect">Choose Avatar:</label>
+          <select id="avatarSelect"></select>
+
+          <div class="banner-upload-wrapper">
+            <div class="banner-upload-container">
+              <label for="bannerUpload" class="banner-upload-label">Choose Banner Image</label>
+              <input type="file" id="bannerUpload" accept="image/*">
+            </div>
+          </div>   
+          <br>          
+          <hr style="border-color: gray;">
+        </div>
+        <br>
+
+        <!-- EXP -->
+        <div class="stat">
+          <span>EXP: <span id="expValue">0</span></span>
+          <div id="expBarContainer">
+            <div id="expBar"></div>
+          </div>
+        </div>
+        <br>
+
+        <!-- Coins -->
+        <div class="stat">
+          <span>Coins: <span id="coinsValue">0</span></span>
+          <div id="coinBarContainer">
+            <div id="coinBar"></div>
+          </div>
+        </div>
+        <br>
+
+        <!-- Sign In -->
+        <button id="signinBtn" class="signin-btn">✅ Daily Sign-In</button>
+        <br><br>
+
+        <!-- Profile Panel Music Player -->
+        <div id="profileMusicPlayer" class="music-player">
+          <div class="album-cover">
+            <img id="albumImg" src="T_mCCI.gif" alt="Album Cover">
+          </div>
+          <div class="music-info">
+            <span id="musicTitle">Background Music</span>
+          </div>
+
+          <audio id="profileAudio" loop>
+            <source src="music.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+
+          <div class="music-controls">
+            <button id="playPauseBtn">⏸️</button>
+            <span id="musicStatus">Playing</span>
+
+            <div class="progress-container">
+              <span id="currentTime">0:00</span>
+              <input type="range" id="progressBar" value="0" min="0" max="100">
+              <span id="durationTime">0:00</span>
+            </div>
+
+            <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+          </div>
+        </div>
+      </aside>
+
+  </main>
+
+  <!-- Reward Popup -->
+  <div id="rewardPopup" class="reward-popup" style="display:none;">
+    🎉 +10 EXP, +20 Coins!
+  </div>
+
+  <script src="daily system.js"></script>
+
+  <!-- 通用弹窗 Modal -->
+<div id="appModal" class="modal-overlay" style="display: none;">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <div id="modalContent"></div>
+    <div class="modal-actions">
+      <button id="modalCancel">Cancel</button>
+      <button id="modalOk">OK</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

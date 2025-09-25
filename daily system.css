@@ -1,0 +1,971 @@
+.jersey-15-regular {
+    font-family: "Jersey 15", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }  
+  /* Banner 本体 */
+.top-banner {
+    width: 100%;
+    height: 150px;
+    background: #111 url('') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #00ffe7;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 20px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+/* Banner 外框 */
+.banner-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 12px;
+  }
+
+/* 上传容器 */
+.banner-upload-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+/* label 作为按钮 */
+.banner-upload-label {
+    display: inline-block;
+    background: #222;
+    border: 2px solid #00ffe7;
+    border-radius: 6px;
+    padding: 8px 14px;
+    color: #00ffe7;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .banner-label:hover {
+    background: #00ffe7;
+    color: #000;
+  }
+  
+  
+  /* 隐藏默认 file input */
+  #bannerUpload {
+    display: none;
+  }
+  
+
+/* body 默认背景动图（dark mode） */
+body {
+    color: white;
+    font-family: "Jersey 15", sans-serif;
+    font-size: 30px;
+    background: url('pixelplain\ night.gif') no-repeat center center fixed;
+    background-size: cover;
+    transition: background 0.5s ease;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); /* 黑色遮罩，0.4 越大越暗 */
+    z-index: -1; /* 保证在背景下 */
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+ 
+  /* light mode 背景动图 */
+  body.light-mode {
+    background: url('pixelplain\ morning.gif') no-repeat center center fixed;
+    background-size: cover;
+  }
+  
+  /* 内容格子保持黑色背景，不受动图影响 */
+  .section-box, .profile-panel, .task-cell, .shop-item, #notes-list, .link-card {
+    background: #111;  /* 保持暗色格子 */
+    border: 2px solid #333;
+  }
+  
+  /* ===== Navbar ===== */
+  nav {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e1e1e;
+    padding: 20px 20px;
+    border-bottom: 2px solid #333;
+    position: sticky;
+    top: 120px;
+    left: 0;
+    z-index: 100;
+    transition: top 0.3s ease;
+  }
+  nav .nav-left { 
+    font-size: 32px;
+    padding-left: 40px;
+
+  }
+  nav .nav-links a, nav button {
+    color: #fff; 
+    text-decoration: none;
+    margin: 8px;
+    font-size: 22px;
+    background: none; border: none; cursor: pointer;
+    transition: all 0.3s ease; /* 过渡动画 */
+  }
+
+  #themeToggle img {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.5s ease; /* 平滑旋转 */
+  }
+
+  nav.nav-links a.active {
+    color: #00ffe7;
+    transform: scale(1.1); /* 点击时稍微放大 */
+  }
+  
+  /* ===== Layout ===== */
+  .container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    padding-top: 60px;
+    max-width: 1200px;  /* 窄屏 */
+    margin: 0 auto;     /* 居中 */
+  }
+  body.wide-mode .container {
+    max-width: 2000px;  /* 宽屏 */
+  }
+  .content { flex: 2; }
+  .section-box {
+    background: #111; border: 2px solid #333;
+    padding: 12px; margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  .section-box h2 { margin-top: 0; }
+  
+  /* ===== Profile Panel ===== */
+  .profile-panel {
+    flex: 1; background: #111; border: 3px solid #444;
+    border-radius: 8px; padding: 16px;
+    text-align: center;
+  }
+  .profile-avatar {
+    width: 100px;   /* 固定宽度 */
+    height: 100px;  /* 固定高度 */
+    object-fit: cover; /* 保持比例裁剪 */
+    display: block;
+    margin: 0 auto 10px auto;
+  }
+
+  #avatarSelect {
+    width: 100px;
+    padding: 4px 8px;
+    border: 2px solid #000;         /* 黑色边框，像素风 */
+    border-radius: 10px;                /* 硬直角像素风 */
+    background-color: rgba(238, 238, 238, 0.342);          /* 浅灰背景 */
+    color: rgb(255, 255, 255);
+    font-family: "Jersey 15", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none;                /* 去掉默认下拉箭头 */
+    position: relative;
+    text-align: center;
+    transition: 0.2ms;
+    
+  }
+  
+  /* 添加自定义箭头 */
+  #avatarSelect::after {
+    content: "▼";
+    font-size: 10px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  /* 悬停效果 */
+  #avatarSelect:hover {
+    background-color: #ddd;
+  }
+  
+  /* 聚焦效果 */
+  #avatarSelect:focus {
+    outline: 2px solid #000;
+    background-color: #ccc;
+  }
+  
+  /* 下拉选项样式 */
+  #avatarSelect option {
+    padding: 2px 6px;
+    background-color: #eee;
+    color: #000;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+  }
+  
+  .progress-bar {
+    background: #222; border: 2px solid #555;
+    border-radius: 6px; height: 14px;
+    width: 100%; margin: 6px 0; overflow: hidden;
+  }
+  .exp-fill { background: #00ffe7; height: 100%; width: 40%; }
+  .coin-fill { background: gold; height: 100%; width: 70%; }
+  
+  /* ===== Buttons ===== */
+  button {
+    background: #222; color: #fff;
+    border: 2px solid #555; border-radius: 6px;
+    padding: 6px 12px; font-size: 16px;
+    font-family: "Jersey 15", sans-serif;
+    cursor: pointer; margin-top: 8px;
+  }
+  button:hover { background: #00ffe7; color: #000; }
+  
+  /* Reward Popup */
+  .reward-popup {
+    position: fixed; top: 20%; left: 50%;
+    transform: translateX(-50%);
+    background: #111; border: 3px solid #00ffe7;
+    color: #00ffe7; padding: 12px 20px;
+    border-radius: 8px; text-align: center;
+    animation: popupFade 2.5s ease forwards;
+  }
+  @keyframes popupFade {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+
+  /* Timetable Table */
+#timetable table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  #timetable th, #timetable td {
+    border: 2px solid #555;
+    padding: 6px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: lighter;
+  }
+  #timetable th {
+    background: #222;
+    color: #00ffe7;
+  }
+  #timetable td {
+    background: #111;
+    color: #fff;
+  }
+  .timetable-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+  }
+
+
+/* === Daily Planner === */
+#plannerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;  /* 行距拉开一点 */
+  }
+  
+  .planner-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 8px 0;   /* 上下多点空间 */
+    gap: 20px;
+  }
+  
+  .time-label {
+    width: 65px;
+    font-size: 18px;
+    color: #aaa;
+  }
+  
+  .task-cell {
+    flex: 1;
+    padding: 10px 12px;   /* 内部空间更大 */
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  
+  .task-cell:hover {
+    background: #181818;
+    border-color: #00ffe7;
+  }
+  
+  .task-cell .empty {
+    color: #555;
+    font-style: italic;
+  }
+  
+  .task-text {
+    font-weight: normal;  /* 改为 normal，不要 bold */
+  }
+  
+  .task-text.done {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+  
+  /* 标签圆点 */
+  .tag-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  
+  /* 标签颜色 */
+  .tag-dot.tag-work { background: #ff5555; }
+  .tag-dot.tag-study { background: #00aaff; }
+  .tag-dot.tag-rest { background: #55ff55; }
+  .tag-dot.tag-other { background: #aaaaaa; }
+  
+  /* 标签文字颜色（不加粗了） */
+  .task-text.tag-work { color: #ff5555; }
+  .task-text.tag-study { color: #00aaff; }
+  .task-text.tag-rest { color: #55ff55; }
+  .task-text.tag-other { color: #aaaaaa; font-style: italic; }
+  
+  /* Legend 分类说明栏 */
+  .planner-legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 14px;
+    font-size: 18px;
+    color: #ccc;
+  }
+  
+  .legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .legend-work { background: #ff5555; }
+  .legend-study { background: #00aaff; }
+  .legend-rest { background: #55ff55; }
+  .legend-other { background: #aaaaaa; }
+  
+  .task-actions button {
+    margin-left: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #888;
+    transition: color 0.2s;
+  }
+  
+  .task-actions button:hover {
+    color: #00ffe7;
+  }
+  
+  /* === 动画效果 === */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(4px); }
+  }
+  
+  .planner-row {
+    animation: fadeIn 0.3s ease; /* 默认淡入 */
+  }
+  
+  .planner-row.removing {
+    animation: fadeOut 0.3s ease forwards; /* 删除时淡出 */
+  }
+  
+  
+
+/* === Calendar === */
+#calendar {
+    text-align: left;
+  }
+
+  /* 控制区 */
+  .calendar-controls {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .calendar-controls button {
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 5px 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 0px;
+  }
+  .calendar-controls button:hover {
+    background: #444;
+  }
+  
+  .calendar-controls input[type="month"] {
+    background: #111;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 3px 5px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  /* 日历 grid */
+  #calendarContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-top: 10px;
+  }
+  
+  /* 星期头 */
+  .calendar-header {
+    background: #222;
+    color: #00ffe7;
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: lighter;
+  }
+  
+  /* 日期格子 */
+  .calendar-day {
+    background: #111;
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 4px;
+  }
+  .calendar-day:hover {
+    border-color: #00ffe7;
+    background: #000;
+  }
+  
+  /* 有 note 的日期 */
+  .calendar-day.has-note {
+    border-color: #ffcc00;
+    box-shadow: 0 0 6px #ffcc00;
+  }
+  
+  /* Notes 列表 */
+  #notes-list {
+    margin-top: 12px;
+    text-align: left;
+    font-size: 22px;
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  #notes-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  #notes-list li {
+    background: #222;
+    padding: 5px;
+    margin: 3px 0;
+    border-radius: 4px;
+    border: 1px solid #444;
+  }
+  
+
+/* Links Dashboard */
+.links-form {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .links-form input {
+    flex: 1;
+  }
+  
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  
+  .link-card {
+    background: #111;
+    border: 2px solid #444;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .link-card a {
+    color: #00ffe7;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .link-card:hover {
+    border-color: #00ffe7;
+    background: #000;
+    box-shadow: 0 0 6px #00ffe7;
+  }
+  .link-card button {
+    font-size: 16px;
+    padding: 2px 4px;
+    background: #ff3333;
+    border-color: #ff3333;
+  }
+  .link-card button:hover {
+    background: #ff6666;
+    border-color: #ff6666;
+  }
+  
+
+/* Notes */
+#notes textarea {
+    width: 100%;
+    resize: vertical;
+  }
+  
+  .notes-list {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+  }
+  .notes-list li {
+    background: #111;
+    border: 2px solid #444;
+    margin-bottom: 6px;
+    padding: 6px;
+    font-size: 22px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .notes-list button {
+    font-size: 16px;
+    padding: 2px 4px;
+    background: #ff3333;
+    border-color: #ff3333;
+  }
+  .notes-list button:hover {
+    background: #ff6666;
+    border-color: #ff6666;
+  }
+  
+
+/* Shop */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  /* Shop item 样式 */
+  .shop-item {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 10px;
+    text-align: center;
+    background: transparent;
+  }
+
+  /* 固定头像大小 */
+  .shop-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;  /* 保持比例 */
+    display: block;
+    margin: 0 auto 8px; /* 居中 + 底部间距 */
+  }
+  
+  .shop-item:hover {
+    border-color: #00ffe7;
+    background: #000;
+    box-shadow: 0 0 6px #00ffe7;
+  }
+  .shop-item button {
+    font-size: 16px;
+    margin-top: 6px;
+    background: #00ffe7;
+    color: #000;
+    border-color: #00ffe7;
+  }
+  .shop-item button:hover {
+    background: #33fff5;
+    border-color: #33fff5;
+  }
+
+  .shop-avatar {
+    width: 48px;
+    height: 48px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .shop-boost-img {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  
+  
+
+/* 全局 input & textarea 美化 */
+input[type="text"], input[type="time"], textarea {
+    background: #1a1a1a;      /* 暗背景 */
+    color: #eee;              /* 字体浅色 */
+    border: 2px solid #333;   /* 边框 */
+    border-radius: 6px;       /* 圆角 */
+    padding: 6px 8px;         /* 内边距 */
+    font-family: 'Press Start 2P', monospace; /* 像素风格字体 */
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+    width: 100%;              /* 自动填满格子 */
+    box-sizing: border-box;
+  }
+  
+  /* 聚焦时的高亮 */
+  input[type="text"]:focus, input[type="time"]:focus, textarea:focus {
+    border-color: #00ffe7;
+    box-shadow: 0 0 6px #00ffe7;
+    outline: none;
+    background: #111;
+  }
+  
+
+  /* ===== Input & Textarea Base ===== */
+input[type="text"], input[type="time"], textarea {
+  border: 2px solid;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== Dark Mode Style ===== */
+body.dark-mode input[type="text"],
+body.dark-mode input[type="time"],
+body.dark-mode textarea {
+  background: #1a1a1a;
+  color: #eee;
+  border-color: #333;
+}
+
+body.dark-mode input[type="text"]:focus,
+body.dark-mode input[type="time"]:focus,
+body.dark-mode textarea:focus {
+  border-color: #00ffe7;
+  box-shadow: 0 0 6px #00ffe7;
+  background: #111;
+}
+
+/* ===== Light Mode Style ===== */
+body.light-mode input[type="text"],
+body.light-mode input[type="time"],
+body.light-mode textarea {
+  background: #f9f9f9;
+  color: #222;
+  border-color: #bbb;
+}
+
+body.light-mode input[type="text"]:focus,
+body.light-mode input[type="time"]:focus,
+body.light-mode textarea:focus {
+  border-color: #008cff;
+  box-shadow: 0 0 6px #008cff;
+  background: #fff;
+}
+
+/* === Modal 弹窗 === */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal-box {
+    background: #1a1a1a;
+    border: 2px solid #00ffe7;
+    padding: 24px 28px;   /* 内部空间更大 */
+    border-radius: 12px;
+    width: 340px;         /* 稍微宽一点 */
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 0 25px #00ffe7;
+    animation: popIn 0.25s ease;
+    line-height: 1.5;     /* 让文字呼吸一点 */
+  }
+  
+  @keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+  .modal-box label {
+    font-weight: lighter;   /* 取消粗体 */
+    display: block;
+    margin-bottom: 6px;
+    color: #ccc;
+  }
+  
+  .modal-box input, 
+  .modal-box select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 14px;  /* 间距更宽松 */
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #111;
+    color: #eee;
+    font-size: 18px;
+  }
+  
+  .modal-actions {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  
+  .modal-actions button {
+    background: #222;
+    border: 1px solid #00ffe7;
+    padding: 7px 14px;
+    cursor: pointer;
+    color: #00ffe7;
+    border-radius: 6px;
+    font-size: 18px;
+    transition: all 0.2s;
+  }
+  
+  .modal-actions button:hover {
+    background: #00ffe7;
+    color: #111;
+  }
+
+  
+  #widthToggle img {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.5s ease; /* 平滑旋转 */
+  }
+  
+  
+  .content {
+    flex: 2;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .content.hidden {
+    opacity: 0;
+    transform: translateY(10px); /* 向下滑出一点 */
+    pointer-events: none;        /* 防止点击隐藏内容 */
+  }
+  
+
+  #profilePanel {
+    width: 300px;
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: sans-serif;
+  }
+  
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  #expBarContainer, #coinBarContainer {
+    width: 100%;
+    height: 12px;
+    background: #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  #expBar, #coinBar {
+    height: 100%;
+    width: 0%;
+    background: #4caf50;
+    border-radius: 6px;
+    transition: width 0.3s;
+  }
+  
+  #coinBar {
+    background: #ffd700;
+  }
+  
+/* 暗绿色音乐播放器卡片样式 */
+.music-player {
+    margin-top: 15px;
+    padding: 15px;
+    background: transparent;
+    color: #fff;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px); /* 可选：增加玻璃感 */
+  }
+  
+  
+  .album-cover {
+    width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-family: "Jersey 15", sans-serif;
+  }
+  
+  .album-cover img {
+    width: 80%;
+    border-radius: 100%;
+    transition: transform 10s linear;
+  }
+  
+  .music-player.playing .album-cover img {
+    animation: rotateAlbum 20s linear infinite;
+  }
+  
+  @keyframes rotateAlbum {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .music-info {
+    margin-bottom: 10px;
+    font-weight: lighter;
+    font-size: 16px;
+    text-align: center;
+    font-family: "Jersey 15", sans-serif;
+  }
+  
+  .music-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .music-controls button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .music-controls button:hover {
+    background: rgba(0,0,0,0.5);
+  }
+  
+  /* 进度条容器 */
+  .progress-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* 进度条 */
+  #progressBar {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.3);
+    background-image: linear-gradient(to right, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 0%, transparent 0%);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  #progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  
+  #progressBar::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+  }
+  
+  /* 时间显示 */
+  #currentTime, #durationTime {
+    font-size: 12px;
+  }
+  
+  /* 音量滑块 */
+  #volumeControl {
+    width: 80px;
+    cursor: pointer;
+  }
+  
