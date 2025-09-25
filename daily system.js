@@ -335,13 +335,17 @@ function renderPlanner() {
         renderPlanner();
       };
     } else {
-      taskCell.innerHTML = `<span class="empty">Double-click to add task...</span>`;
+      taskCell.innerHTML = `<span class="empty">Click to add task...</span>`;
     }
 
-    // 双击新增任务
+        // 单击新增任务
     taskCell.onclick = () => {
-      openTaskForm(hour, plannerData[hour]);
+      // 只有当该时段还没有任务时才打开添加任务表单
+      if (!plannerData[hour]) {
+        openTaskForm(hour, plannerData[hour]);
+      }
     };
+
 
     row.appendChild(timeLabel);
     row.appendChild(taskCell);
@@ -856,6 +860,7 @@ function formatTime(sec) {
   const seconds = Math.floor(sec % 60);
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
+
 
 
 
