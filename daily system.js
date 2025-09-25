@@ -339,7 +339,7 @@ function renderPlanner() {
     }
 
     // 双击新增任务
-    taskCell.ondblclick = () => {
+    taskCell.onclick = () => {
       openTaskForm(hour, plannerData[hour]);
     };
 
@@ -856,5 +856,6 @@ function formatTime(sec) {
   const seconds = Math.floor(sec % 60);
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
+
 
 
